@@ -1,0 +1,57 @@
+<html>
+<head><title>Zarejestruj się</title></head>
+<body>
+<font color="teal" face="Biome, Agency FB">
+<a href="../index.html">HOME</a> <a name="top">|</a> <a href="../info/help.html">Pomoc</a> |
+<a href="../info/contact.html">Kontakt</a> | <a href="register.html"><b>Zarejestruj się</b></a>
+
+</font>
+<hr>
+<font color="teal" face="Colonna MT, Agency FB">
+<div align="center">
+	<h1>Zarejestruj się</h1>
+</div>
+<pre>
+<form id="register">
+Nazwa użytkownika: <input name="username" placeholder="Nazwa użytkownika" required><br>
+             Email:<input name="email" type="email" placeholder="przykład123@net.com" required><br>
+             Hasło:<input name="password" type="password" placeholder="Hasło" required><br>
+  <button type="submit">Zarejestruj</button>
+</form>
+</pre>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+
+const supabase = createClient(
+  "https://utuuezwxemjryzdfsdri.supabase.co",
+  "sb_publishable_ABDse2m3fX2l3LWvypGTxw_cHDbBa-Y"
+)
+
+document.getElementById("register").addEventListener("submit", async (e) => {
+  e.preventDefault()
+
+  const form = new FormData(e.target)
+
+  const username = form.get("username")
+  const email = form.get("email")
+  const password = form.get("password")
+
+  const { data, error } = await supabase.auth.signUp({
+    email: email,
+    password: password,
+    options: {
+      data: {
+        username: username
+      }
+    }
+  })
+
+  if (error) {
+    alert(error.message)
+  } else {
+    alert("Konto utworzone!")
+  }
+})
+</script>
+	
